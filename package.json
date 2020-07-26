@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/JoeyRead/image_util/issues"
   },
-  "homepage": "https://github.com/JoeyRead/image_util#readme"
+  "homepage": "https://github.com/JoeyRead/image_util#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
