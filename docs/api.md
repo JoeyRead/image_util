@@ -31,3 +31,13 @@ Currently image_util contains two api's.
         }
     }
     ```
+- Python request
+    ```python
+        import requests
+    
+        url = "http://localhost:3000/api/image/resize?width=312&height=300&name=Image3.jpg"     
+        payload = {}
+        headers= {}
+        response = requests.request("GET", url, headers=headers, data = payload)
+        print(response.text.encode('utf8'))
+    ```
