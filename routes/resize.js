@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const image_service = require('../service/image_resize');
 const sharp = require('sharp');
 const utils = require('../util/utils');
+const path = require('path');
 
 
 const success = function (res, data) {
@@ -59,9 +59,11 @@ router.get('/resize', function (req, res) {
         return error_response(res, "file path is mandatory", 400);
     }
 
+    let dir_name = path.dirname(file_path);
+    let base_name = path.basename(file_path);
     try {
         sharp(file_path).resize({height: height, width: width})
-            .toFile('uploads/' + 'thumbnails-' + '1.jpg', (err, resizeImage) => {
+            .toFile(dir_name + '/thumbnails-' + base_name, (err, resizeImage) => {
                 if (err) {
                     console.log(err);
                     return error_response(res, err);

@@ -7,7 +7,7 @@ const app = express();
 const image_resize = require('./routes/resize');
 const port = 3000;
 
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use('/api/image', image_resize);
 app.get('/', (req, res) => {
     res.status(200).send("Hello World");
