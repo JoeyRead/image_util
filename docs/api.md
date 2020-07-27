@@ -1,7 +1,7 @@
 ## APIs
 Currently image_util contains two api's.
 
-#### 1. POSt image in request input, with request parameters height, width
+#### 1. POST image in request input, with request parameters height, width
 - Send image in post request as form-data and request parameters image height and width 
 - Signature - POST `/api/image/resize?width=312&height=300`
 - Curl Request - `curl --location --request POST 'http://localhost:3000/api/image/resize?width=312&height=300' \
