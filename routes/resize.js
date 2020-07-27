@@ -45,7 +45,7 @@ router.post('/resize', utils.upload.single('image'), function (req, res) {
 router.get('/resize', function (req, res) {
     const width = parseInt(req.query.width);
     const height = parseInt(req.query.height);
-    const file_path = req.query.path;
+    const file_name = req.query.name;
 
     if (isNaN(req.query.width) || isNaN(width) || width == null) {
         return error_response(res, "width should not be null", 400);
@@ -55,15 +55,16 @@ router.get('/resize', function (req, res) {
         return error_response(res, "height should not be null", 400);
     }
 
-    if(file_path == null) {
-        return error_response(res, "file path is mandatory", 400);
+    if(file_name == null) {
+        return error_response(res, "file name is mandatory", 400);
     }
 
-    let dir_name = path.dirname(file_path);
-    let base_name = path.basename(file_path);
+    let input_path = `${process.env.INPUT_PATH}${file_name}`;
+    let output_path = `${process.env.OUTPUT_PATH}${height}__${width}__${file_name}`;
+
     try {
-        sharp(file_path).resize({height: height, width: width})
-            .toFile(dir_name + '/thumbnails-' + base_name, (err, resizeImage) => {
+        sharp(input_path).resize({height: height, width: width})
+            .toFile(output_path, (err, resizeImage) => {
                 if (err) {
                     console.log(err);
                     return error_response(res, err);
@@ -71,7 +72,7 @@ router.get('/resize', function (req, res) {
                     console.log(resizeImage);
                 }
             });
-        return success(res, "file path");
+        return success(res, {'path': output_path});
     } catch (error) {
         console.error(error);
         return error_response(res, error, 500);
