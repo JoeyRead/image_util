@@ -15,6 +15,20 @@ Currently image_util contains two api's.
            }
        }
     ```
+- Python Request
+    ```python
+    import requests
+    
+    url = "http://localhost:3000/api/image/resize?width=312&height=300"
+    
+    payload = {}
+    files = [
+      ('image', open('/Users/abrarkhan/Desktop/Images/Image3.jpg','rb'))
+    ]
+    headers= {}
+    response = requests.request("POST", url, headers=headers, data = payload, files = files)
+    print(response.text.encode('utf8'))
+    ```
   
 #### 2. Get api with image name with with request parameters height, width
 - Pass the image name, height and width as request parameter
