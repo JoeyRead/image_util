@@ -1,33 +1,13 @@
 const path = require('path');
 const express = require('express');
-const multer = require('multer');
 const sharp = require('sharp');
+const utils = require('./util/utils');
 
 const app = express();
 const image_resize = require('./routes/resize');
 const port = 3000;
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (req, file, cb) => {
-        console.log(file);
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-
-const upload = multer({storage: storage, fileFilter: fileFilter});
 
 const success = function (res, data) {
     return res.status(200).json({success: true, data: data});
@@ -38,7 +18,7 @@ const error_response = function (res, error, status = 500) {
 };
 
 //Upload route
-app.post('/upload', upload.single('image'), (req, res, next) => {
+app.post('/upload', utils.upload.single('image'), (req, res, next) => {
     try {
         const width = parseInt(req.query.width);
         const height = parseInt(req.query.height);
