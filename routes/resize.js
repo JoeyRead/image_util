@@ -18,6 +18,8 @@ router.post('/resize', utils.upload.single('image'), function (req, res) {
     const width = parseInt(req.query.width);
     const height = parseInt(req.query.height);
 
+    let output_path = `${process.env.UPLOAD_PATH}${height}__${width}__${req.file.originalname}`;
+
     if (isNaN(req.query.width) || isNaN(width) || width == null) {
         return error_response(res, "width should not be null", 400);
     }
@@ -27,7 +29,7 @@ router.post('/resize', utils.upload.single('image'), function (req, res) {
     }
     try {
         sharp(req.file.path).resize({height: height, width: width})
-            .toFile('uploads/' + 'thumbnails-' + req.file.originalname, (err, resizeImage) => {
+            .toFile(output_path, (err, resizeImage) => {
                 if (err) {
                     console.log(err);
                     return error_response(res, err);
@@ -35,7 +37,7 @@ router.post('/resize', utils.upload.single('image'), function (req, res) {
                     console.log(resizeImage);
                 }
             });
-        return success(res, "file path");
+        return success(res, {path: output_path});
     } catch (error) {
         console.error(error);
         return error_response(res, error, 500);
