@@ -1,5 +1,5 @@
 # image_util
-This repository contains code like image resizing, etc....
+This repository contains code for image resizing, It's an api wrapper around [sharp](https://github.com/lovell/sharp)
 
 ### How to run
 1. Install node 
