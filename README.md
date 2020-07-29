@@ -20,3 +20,7 @@ This repository contains code like image resizing, etc....
 6. Change environment variable inside [.env](./.env) file
 
 7. Run `npm start`
+
+
+#### API's
+- Check the [api docs](./docs/api.md)
